@@ -9,32 +9,42 @@
 </head>
 <body>
 	<br>
+	<div id="app">
+		<component :is='componame' @change='change'></component>
+	</div>
+	<template id="signupForm">
 		<div class="col-lg-offset-4 col-lg-4">
 			<div class="panel panel-primary" id="formdiv">
 				<div class="panel-heading">
 					<h3 class="panel-title">Vue.js SignUp Form Validation</h3>
 				</div>
 				<div class="panel-body">
-					<form >
+					<form @submit.prevent='submit'>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Email address</label>
-							<input type="text" placeholder="Email" name="email" class="form-control">
+							<input type="text" placeholder="Email" v-model='email' name="email" class="form-control">
+							<span v-if='msg.email'>{{msg.email}}</span>
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Password</label>
-							<input type="password" placeholder="Password" name="password" class="form-control">
+							<input type="password" placeholder="Password" v-model='password' name="password" class="form-control">
+							<span v-if='msg.password'>{{msg.password}}</span>
 						</div>			
 						<div class="form-group">
 							<label for="exampleInputEmail1">Confirm Password</label>
-							<input type="password" placeholder="Confirm Password" name="confirmPassword" class="form-control">
+							<input type="password" placeholder="Confirm Password" name="confirmPassword" v-model='confirmPassword' class="form-control">
+							<span v-if='msg.confirmPassword'>{{msg.confirmPassword}}</span>
 						</div>
-						<input type="submit" value="Sign Up" class="btn btn-warning">
-						<small><a class="pull-right" href="#">Terms and Conditions</a></small>
+						<input type="submit" :disabled="disableSubmitButton" value="Sign Up" class="btn btn-warning">
+						<small><a class="pull-right" href="#" @click.prevent=gototnc>Terms and Conditions</a></small>
 					</form>
 				</div>
 			</div>
 		</div>
+	</div>
+</template>
 
+<template id="tnc">
 	<div class="col-lg-offset-4 col-lg-4">
 		<div class="panel panel-info">
 			<div class="panel-heading">
@@ -50,9 +60,12 @@
 				</ul>
 			</div>
 			<div class="panel-footer">
-				<button class="btn btn-success">Back To Login</button>
+				<button class="btn btn-success" @click="back_to_signup">Back To Login</button>
 			</div>
 		</div>
 	</div>
+</template>
+
+<script src='script.js'></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+body{
+  background-image: url("http://download-wallpaper.net/images/background-images/background-images-5.jpg");
+  -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+}
+#formdiv{
+  background-image: url("http://download-wallpaper.net/images/background-images/background-images-3.jpg");
+}
+span{
+  color: red;
+}
