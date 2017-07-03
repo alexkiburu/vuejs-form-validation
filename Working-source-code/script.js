@@ -1,97 +1,91 @@
-Vue.component('signupForm',{
-	template:'#signupForm',
+Vue.component('signUpForm',{
+	template:'#signUpForm',
 	data(){
-		return{
+		return {
 			password:'',
 			confirmPassword:'',
 			email:'',
 			msg:[],
-			disableSubmitButton:true,
+			disableSubmitButton : true,
 		}
 	},
 	watch:{
-		email: function(val) {
-			this.getEventTargetName();
-			this.email = val;
-		  	this.check_email(this.email,fieldName);
+		email(value){
+			this.eventName();
+			this.email = value;
+			this.check_email(value);
 		},
-		password(val){
-			this.getEventTargetName();
-			this.password = val;
-			this.passwordLengthCheck(val,fieldName);
+		password(value){
+			this.eventName();
+			this.password = value;
+			this.checkPassword(value);
 		},
-		confirmPassword(val){
-			this.getEventTargetName();
-			this.confirmPassword = val;
-			this.confirmPasswordCheck(val,this.password,fieldName);
+		confirmPassword(value){
+			this.eventName();
+			this.confirmPassword = value;
+			this.checkConfirmPassword(value);
 		}
 	},
 	methods:{
-		gototnc(){
+		changeToTnc(){
 			this.$emit('change','tnc');
 		},
-		check_email(email){
+		check_email(value){
+			if (/^\w+([\.-]?\ w+)*@\w+([\.-]?\ w+)*(\.\w{2,3})+$/.test(value))
 			{
-			if (/^\w+([\.-]?\ w+)*@\w+([\.-]?\ w+)*(\.\w{2,3})+$/.test(email))
-			{
-				this.msg[fieldName] = '';
-				return true;
-			}
-				this.msg[fieldName] = 'Waiting for correct email.Keep Typing...';
-				return true;
+				this.msg[name] = '';
+			}else{
+				this.msg[name] = 'Keep Typing... We are waiting for correct Email';
 			}
 		},
-		passwordLengthCheck(password){
-			this.lengthCheck(password,'password');
+		checkPassword(value){
+			this.passwordLengthCheck(value);
 		},
-		confirmPasswordCheck(confirmPassword,password,fieldName){
-			if(this.lengthCheck(confirmPassword,'confirmPassword')){
-				if(confirmPassword !== password) {
-					this.msg[fieldName]='Your Passwords does not match'
+		checkConfirmPassword(value){
+			if(this.passwordLengthCheck(value)){
+				if (value == this.password) {
+					this.msg[name]= '';
+					this.disableSubmitButton = false;
 				}else{
-					this.msg[fieldName] = '';
-					this.enableSubmitButton()
+					this.msg[name] = "Password does not match, please try again";
 				}
 			}
 		},
-		submit(){
-			alert('Great You have done this, Keep Learning');
-		},
-		lengthCheck(passwordToCheck){
-			message = `Password must contain 6 characters. Still ${6 - passwordToCheck.length} to go..` 
+		passwordLengthCheck(passwordToCheck){
+			remainingChars = 6 - passwordToCheck.length;
 			if (passwordToCheck.length < 6) {
-				this.msg[fieldName]= message;
+				this.msg[name] = 'Password must contain 6 characters. '+ remainingChars +' more to go...';
 			}else{
-				this.msg[fieldName] = '';
+				this.msg[name] ='';
 				return true;
 			}
 		},
-		getEventTargetName(){
-			fieldName = event.target.name;
+		eventName(){
+			name = event.target.name;
 		},
-		enableSubmitButton(){
-			if (this.msg.length == 0){
-				this.disableSubmitButton = false;
-			}
+		submit(){
+			alert('Great you have completed this project, keep learning.')
 		}
-	},
+	}
 });
+
 Vue.component('tnc',{
 	template:'#tnc',
 	methods:{
 		back_to_signup(){
-			this.$emit('change','signupForm');
+			this.$emit('change','signUpForm');
 		}
 	}
 });
+
 new Vue({
 	el:'#app',
 	data:{
-		componame:'signupForm'
+		componentName:'signUpForm'
 	},
 	methods:{
 		change(newComp){
-			this.componame = newComp
+			this.componentName = newComp;
 		}
 	}
-});
+})
